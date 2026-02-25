@@ -1,14 +1,38 @@
 #lang forge/froglet
 
-// First pass model for Brown-style housing lottery.
-// This captures:
-//  - students partitioned by rising class year
-//  - lottery-number bands by class year
-//  - non-empty groups of size 1..6
-//  - ranked buildings and ranked rooms
-//  - complete housing assignment where nobody exceeds room capacity
-//  - a lightweight ordering approximation: earlier lottery groups begin housing
-//    no later than later lottery groups
+
+// What is a housing lottery
+// We have a bunch of students
+// We give them all random numbers within a 5-num range
+// - Seniors get numbers 1, 2, 3, 4, 5
+// - Juniors get numbers 6, 7, 8, 9, 10
+// - Sophomores get numbers 11, 12, 13, 14, 15
+// - No freshmen obviously
+
+// I dont know if we can do enums in forge but if we have to represent class year as a string or int thats fine too.
+// Also for the duration of this project every class year is assumed to be refering to the rising class, so "Junior" means "rising Junior" and so on.
+
+// Everyone gets numbers, everyone is in a group. 
+// There are no empty groups. 
+// Some groups contain 1 person. Groups can contain 1-6 people.
+
+// After checking that everyone is in groups, we distribute the housing in terms of slot order. 
+// There are 45 buildings on campus, and they are strictly rank ordered such that everyone with the first housing slot will take the rooms in building 1 that fit their group size.
+
+// Example: 
+// If we have students [1 1 1] [2 2] [2] [3 3 3 3] [4 4] [5 5 5]
+// And Dorm 1 has rooms with size 3, 2, 2, 1
+// Group 1 will fill Room 1 with 3 people, Group 2 will fill Room 2 with 2 people, Group 2 will fill Room 4 with 1 person, and Group 4 will fill Room 3 with 2 people.
+// Groups may fill rooms that they are too small for but not rooms that they are too large for.
+
+/// The filling process continues.
+// If a 2 person group is too big to fit in the next available room, they skip that room and try the next one. 
+// If there are no more rooms available, their group fractures one member at a time until they can fit in the next available room.
+
+// If a 1 person group is too big to fit in any available room (there are no singles left) they are merged with any remaining groups until they can fit in the next available room, starting with the smallest group first.
+
+// The housing process ends when all students are housed. All students must be housed
+
 
 abstract sig Year {}
 one sig Senior, Junior, Sophomore extends Year {}
