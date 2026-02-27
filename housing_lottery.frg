@@ -83,8 +83,8 @@ pred groupsWellformed {
 
 pred inventoryWellformed {
 	// 45 ranked buildings.
-	#Building = 45
-	all b: Building | b.buildingRank >= 1 and b.buildingRank <= 45
+	#Building = 5
+	all b: Building | b.buildingRank >= 1 and b.buildingRank <= 5
 	all disj b1, b2: Building | b1.buildingRank != b2.buildingRank
 
 	// Rooms have capacities 1..6 and unique global rank.
@@ -93,6 +93,13 @@ pred inventoryWellformed {
 		r.roomRank >= 1
 	}
 	all disj r1, r2: Room | r1.roomRank != r2.roomRank
+
+	// Ensure at least two rooms have different capacities
+    some disj r1, r2: Room | r1.capacity != r2.capacity
+	// Ensure at least one room of each capacity exists
+	all cap: Int | (cap >= 1 and cap <= 6) implies {
+        some r: Room | r.capacity = cap
+    }
 
 	// Building rank induces room-rank order (all rooms in earlier buildings
 	// appear before all rooms in later buildings).
@@ -141,9 +148,12 @@ pred firstPassHousingLottery {
 	groupStartsNoLaterThanLaterGroups
 }
 
-// Tiny sanity scope (for quick iteration)
 run {firstPassHousingLottery}
-for exactly 45 Building, exactly 20 Room, exactly 24 Student, exactly 8 Group, 7 Int
+for 5 Int, exactly 5 Building, exactly 10 Room, exactly 12 Student, exactly 4 Group
+
+// Tiny sanity scope (for quick iteration)
+// run {firstPassHousingLottery}
+// for 7 Int, exactly 45 Building, exactly 20 Room, exactly 24 Student, exactly 8 Group
 
 // A stronger scope if the tiny scope is satisfiable on your machine:
 // run {firstPassHousingLottery}
