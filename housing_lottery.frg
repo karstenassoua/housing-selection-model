@@ -82,9 +82,8 @@ pred groupsWellformed {
 }
 
 pred inventoryWellformed {
-	// 45 ranked buildings.
-	#Building = 5
-	all b: Building | b.buildingRank >= 1 and b.buildingRank <= 5
+	// rank buildings.
+	all b: Building | b.buildingRank >= 1 and b.buildingRank <= #Building
 	all disj b1, b2: Building | b1.buildingRank != b2.buildingRank
 
 	// Rooms have capacities 1..6 and unique global rank.
@@ -151,11 +150,10 @@ pred firstPassHousingLottery {
 run {firstPassHousingLottery}
 for 5 Int, exactly 5 Building, exactly 10 Room, exactly 12 Student, exactly 4 Group
 
-// Tiny sanity scope (for quick iteration)
+// Longer runs
 // run {firstPassHousingLottery}
 // for 7 Int, exactly 45 Building, exactly 20 Room, exactly 24 Student, exactly 8 Group
 
-// A stronger scope if the tiny scope is satisfiable on your machine:
 // run {firstPassHousingLottery}
 // for exactly 45 Building, exactly 70 Room, exactly 120 Student, exactly 35 Group, 7 Int
 
