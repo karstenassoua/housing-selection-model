@@ -12,8 +12,14 @@ Our model intends to formalize the housing lottery process in Forge, representin
 ## Model Design and Visualization
 #### Give an overview of your model design choices, what checks or run statements you wrote, and what we should expect to see from an instance produced by the Sterling visualizer. How should we look at and interpret an instance created by your spec? Did you create a custom visualization, or did you use the default?
 
+Design choices:
 - We are excluding freshmen, transfers and all of their dormitories, as they do not enter the housing lottery.
 - Not all seniors and juniors participate in the housing lottery. As such it is possible for one to be both a Senior and all have no Housing number. However if one does not have a Housing number, they do not exist and are NOTHING to us!
+
+Checks and run statements:
+- We run { firstPassHousingLottery } with a small but quick model (we use exactly 5 Building, exactly 10 Room, exactly 12 Student, exactly 4 Group) to quickly find instances and debug constraints. We have run conditions that scale up to realistic options (like exactly 45 Building). In these cases, we increase the Int bitwidth (to 7 Int) so ranks like 45 are representable.
+
+In sterling, you should expect to see many students, each matched to one class year, one lottery group, and one Room that exists in one Building. You will also a bunch of ints that represent the lottery group, the student's lotteryNumber, and the group's pick number. Room have caps between 1 and 6 and belong to one Building that has a unique buildingRank. Senior students should be placed in rooms part of buildings with higher ranks (closer to 1), with Junior students, then Sophomore students most likely getting the worst ranked dorms. We used the default visualization.
 
 ## Signatures and Predicates
 #### At a high level, what do each of your sigs and preds represent in the context of the model? Justify the purpose for their existence and how they fit together.
