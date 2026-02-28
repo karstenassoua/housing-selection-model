@@ -5,11 +5,9 @@ what it says on the tin. please give us an A tim
 ## Project Objective
 #### What are you trying to model? Include a brief description that would give someone unfamiliar with the topic a basic understanding of your goal.
 
-Every academic year rising sophomores, juniors, and seniors at Brown University enter a housing lottery to determine which campus residence they will have the privilege (or misfortune) of living in next year.
+Every academic year rising sophomores, juniors, and seniors at Brown University enter a housing lottery to determine which campus residence they will have the privilege (or misfortune) of living in next year. Students may approach the process alone or form a group. Regardless of group membership, all students in the housing lottery are randomly assigned housing lottery time slots. During these slots they are able to select rooms that exactly matches their group size in campus residences. Necessarily, every student who is a member of the lottery must eventually be assigned to a room.
 
-Students may approach the process alone or form a group. Regardless of group membership, all students in the housing lottery are randomly assigned housing lottery time slots. During these slots they are able to select rooms that exactly matches their group size in campus residences.
-
-Necessarily, every student who is a member of the lottery must eventually be assigned to a room.
+Our model intends to formalize the housing lottery process in Forge, representing students, housing groups, buildings, and rooms, along with the structural and fairness rules that exist for housing assignments. This model includes important constraints of a housing lottery, such as lottery number bands by class year, maximum group sizes, room capacity limits, and the requirement that earlier lottery picks will tend to pick better dorms compared to later ones. Ultimately, we want to show that every student in the lottery is assigned to exactly one room while respecting capacity, ordering, and grouping rules that exist in the current Reslife system.
 
 ## Model Design and Visualization
 #### Give an overview of your model design choices, what checks or run statements you wrote, and what we should expect to see from an instance produced by the Sterling visualizer. How should we look at and interpret an instance created by your spec? Did you create a custom visualization, or did you use the default?
